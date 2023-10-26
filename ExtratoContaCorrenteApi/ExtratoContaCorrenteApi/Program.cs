@@ -1,4 +1,5 @@
 using ExtratoContaCorrenteApi.Context;
+using ExtratoContaCorrenteApi.Repository.LancamentoRepo;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ContextDb>(c => c.UseSqlServer(builder.Configuration.GetConnectionString("DbConnectionString")));
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddScoped<ILancamentoRepository, LancamentoRepository>();
 
 var app = builder.Build();
 
