@@ -28,12 +28,12 @@ namespace ExtratoContaCorrenteApi.Repository.LancamentoRepo
 
 		public async Task<IEnumerable<Lancamento>> GetAll()
 		{
-			return  _context.Lancamentos;
+			return  _context.Lancamentos.OrderBy(x => x.data);
 		}
 
-		public async Task<IQueryable<Lancamento>> GetByDate(DateTime date)
+		public async Task<IQueryable<Lancamento>> GetByDate(DateTime date, int intervalo)
 		{
-			return  _context.Lancamentos.AsNoTracking().Where(x => x.data.Day == date.Day - 2 && (x.data.Month == date.Month && x.data.Year == date.Year));
+			return  _context.Lancamentos.AsNoTracking().Where(x => x.data.Day >= date.Day - intervalo && x.data.Day <= date.Day && (x.data.Month == date.Month && x.data.Year == date.Year)).OrderBy(x => x.data);
 		}
 	}
 }

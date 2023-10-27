@@ -9,6 +9,8 @@ namespace ExtratoContaCorrenteApi.Helpers
         public LancamentoProfile()
         {
             CreateMap<LancamentoDTO,Lancamento>().ReverseMap();
+
+            CreateMap<LancamentoNaoAvulsoDTO, Lancamento>().ReverseMap();
             
         }
     }

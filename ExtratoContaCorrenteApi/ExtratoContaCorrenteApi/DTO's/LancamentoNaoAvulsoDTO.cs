@@ -1,29 +1,28 @@
 ﻿using ExtratoContaCorrenteApi.Models;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using System.Text.Json.Serialization;
 
 namespace ExtratoContaCorrenteApi.DTO_s
 {
-	public class LancamentoDTO
+	public class LancamentoNaoAvulsoDTO
 	{
 		public string descricao { get; set; }
 		public DateTime data { get; set; }
 		public double valor { get; set; }
-		public Boolean avulso { get; set; }
+		private Boolean avulso { get; set; } = false;
 
 		[JsonConverter(typeof(JsonStringEnumConverter))]
-		public Status status { get; set; }
+		private Status status { get; set; }
 
-		public LancamentoDTO(string descricao, DateTime data,double valor, bool avulso, Status status)
+		public LancamentoNaoAvulsoDTO(string descricao, DateTime data, double valor)
 		{
 			this.descricao = descricao;
 			this.data = data;
 			this.valor = valor;
-			this.avulso = avulso;
+			this.status = Status.Válido;
 
 		}
 
-		public LancamentoDTO()
+		public LancamentoNaoAvulsoDTO()
 		{
 
 		}

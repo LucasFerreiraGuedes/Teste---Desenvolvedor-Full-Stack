@@ -25,13 +25,29 @@ namespace ExtratoContaCorrenteApi.Controllers
 
             if(lancamentos == null)
             {
-                return NoContent();
+                return NotFound();
             }
             else
             {
                 return Ok(lancamentos);
             }
         }
+
+        [HttpGet("GetByDate")]
+        public async Task<ActionResult<IEnumerable<Lancamento>>> GetByDate(DateTime date,int intervalo)
+        {
+            IEnumerable<Lancamento> lancamentos = await _context.GetByDate(date, intervalo);
+
+			if (lancamentos == null)
+			{
+				return NotFound();
+			}
+			else
+			{
+				return Ok(lancamentos);
+			}
+
+		}
 
         [HttpPost]
         public async Task<ActionResult<Lancamento>> Add(LancamentoDTO lancamentoDTO)
@@ -49,5 +65,22 @@ namespace ExtratoContaCorrenteApi.Controllers
                 return BadRequest();
             }
         }
-    }
+
+		[HttpPost("NaoAvulso")]
+		public async Task<ActionResult<Lancamento>> AddLancamentoNaoAvulso(LancamentoNaoAvulsoDTO lancamentoNaoAvulsoDTO)
+		{
+			Lancamento lancamento = _mapper.Map<Lancamento>(lancamentoNaoAvulsoDTO);
+
+			Boolean response = await _context.Add(lancamento);
+
+			if (response)
+			{
+				return CreatedAtAction(null, lancamento);
+			}
+			else
+			{
+				return BadRequest();
+			}
+		}
+	}
 }

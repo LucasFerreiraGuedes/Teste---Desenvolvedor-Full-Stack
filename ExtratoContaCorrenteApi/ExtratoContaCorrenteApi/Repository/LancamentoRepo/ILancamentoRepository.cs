@@ -6,6 +6,6 @@ namespace ExtratoContaCorrenteApi.Repository.LancamentoRepo
 	{
 		public Task<IEnumerable<Lancamento>> GetAll();
 
-		public Task<IQueryable<Lancamento>> GetByDate(DateTime date);
+		public Task<IQueryable<Lancamento>> GetByDate(DateTime date,int intervalo);
 	}
 }
