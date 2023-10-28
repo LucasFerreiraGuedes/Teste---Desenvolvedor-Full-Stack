@@ -21,6 +21,14 @@ namespace ExtratoContaCorrenteApi.Context
 					v => v.ToString(),
 					v => (Status)Enum.Parse(typeof(Status), v)
 				);
+
+			modelBuilder.Entity<Lancamento>()
+				.Property(e => e.avulso)
+				.HasConversion(
+					v => v.ToString(),
+					v => (Avulso)Enum.Parse(typeof(Avulso), v)
+				);
+
 		}
 
 	}

@@ -1,15 +1,62 @@
 <div class="container">
-  <div class="row">
-    <header>
-      <h3 style="text-align: center;margin-top: 30px;">
-        Extrato de Conta Corrente
-      </h3>
-    </header>
+  <div class="row" style="text-align: center;margin-top: 30px;">
+    <div class="col-8">
+      <header>
+        <h3 >
+          Extrato de Conta Corrente
+        </h3>
+      </header>
+    </div>
+    <div class="col-3">
+      <button (click)="cadastrarlancamento()" type="button" class="btn btn-success">Cadastrar Lançamento</button>
+    </div>
+    
   </div>
+
+
+  
 
 
    <div class="row" style="margin-top: 60px;">
 
+        <div class="col-5" *ngIf="lancamentoSelecionado">
+        
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Descrição do Lançamento</label>
+            <input [disabled]="lancamentoSelecionado.id > 0" type="text" class="form-control" name="descricao" [(ngModel)] = "lancamentoSelecionado!.descricao">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Data</label>
+            <input type="date" name="data" class="form-control" [(ngModel)] = "lancamentoSelecionado!.data">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Valor</label>
+            <input type="number" class="form-control" name="preco" [(ngModel)] ="lancamentoSelecionado!.valor">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Avulso</label>
+            <select [disabled]="lancamentoSelecionado.id > 0" class="form-control mt-2" name="avulso" [(ngModel)]="lancamentoSelecionado!.avulso">
+              <option [ngValue]="'Avulso'">Sim</option>
+              <option [ngValue]="'NãoAvulso'">Não</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Status</label>
+            <select [disabled]="lancamentoSelecionado.id > 0" class="form-control mt-2" name="status" [(ngModel)]="lancamentoSelecionado!.status">
+              <option [ngValue]="'Válido'">Válido</option>
+              <option [ngValue]="'Cancelado'">Cancelado</option>
+            </select>
+          </div>
+          
+          <button (click)="salvarLancamento()" type="submit" class="btn btn-primary">Submit</button>
+          <button (click)="limparLancamentoSelecionado()" type="submit" class="btn btn-warning">Voltar</button>
+        </form>
+
+        </div>
+
+
+      <div [ngClass]="{'col-7': lancamentoSelecionado, 'col-12': !lancamentoSelecionado}">
       <table class="table">
         <thead>
           <tr>
@@ -32,13 +79,14 @@
             <td>{{lancamento.data}}</td>
             <td>
                 <div class="btn-group">
-                  <button  class="btn btn-primary">Editar</button>
-                  <button  class="btn btn-danger">Apagar</button>
+                  <button (click)="editarLancamento(lancamento)" [disabled]="lancamento.avulso === 'NãoAvulso' || lancamento.status === 'Cancelado'" class="btn btn-primary">Editar</button>
+                  <button (click)="cancelarLancamento(lancamento.id)" [disabled]="lancamento.avulso === 'NãoAvulso' || lancamento.status === 'Cancelado'" class="btn btn-danger">Cancelar</button>
                 </div>
             </td>
           </tr>
         </tbody>
       </table>
+    </div>
    </div>
 
 

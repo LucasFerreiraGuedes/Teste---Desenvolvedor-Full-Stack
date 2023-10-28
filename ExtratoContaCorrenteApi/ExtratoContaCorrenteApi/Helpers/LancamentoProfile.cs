@@ -11,6 +11,7 @@ namespace ExtratoContaCorrenteApi.Helpers
             CreateMap<LancamentoDTO,Lancamento>().ReverseMap();
 
             CreateMap<LancamentoNaoAvulsoDTO, Lancamento>().ReverseMap();
+
             
         }
     }

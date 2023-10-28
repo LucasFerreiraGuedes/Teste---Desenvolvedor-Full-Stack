@@ -82,5 +82,48 @@ namespace ExtratoContaCorrenteApi.Controllers
 				return BadRequest();
 			}
 		}
+
+        [HttpPatch("CancelarLancamento")]
+
+        public async Task<ActionResult<Lancamento>> CancelarLancamento([FromBody]int id)
+        {
+            try
+            {
+                Lancamento lancamento = await _context.Cancel(id);
+
+                if(lancamento == null)
+                {
+                    return NotFound();
+                }
+                return Ok(lancamento);
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e);
+            }
+            return BadRequest();
+        }
+        [HttpPatch("AttValorData")]
+
+        public async Task<ActionResult<Lancamento>> AttValorData(LancamentoAttValor_DataDTO lancamentoDTO)
+        {
+            try
+            {
+                Lancamento lancamento = await _context.AttValorData(lancamentoDTO.Id,lancamentoDTO.valor,lancamentoDTO.data);
+
+                if(lancamento != null)
+                {
+                    return Ok(lancamento);
+                }
+                return NotFound();
+            }
+            catch (Exception e)
+            {
+
+				Console.WriteLine(e);
+			}
+            return BadRequest();
+        }
 	}
 }
