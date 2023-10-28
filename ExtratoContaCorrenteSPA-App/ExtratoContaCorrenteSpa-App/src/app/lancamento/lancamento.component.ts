@@ -60,20 +60,10 @@ export class LancamentoComponent implements OnInit {
     
     if(this.lancamentoSelecionado!.id == 0){
 
-      if(this.lancamentoSelecionado?.avulso == 'Avulso'){
-        this.lancamentoSelecionado.avulso = "0";
-      }
-      else{
-        this.lancamentoSelecionado!.avulso = "1";
-      }
-  
-      if(this.lancamentoSelecionado?.status == 'Válido'){
-         this.lancamentoSelecionado.status = "0";
-      }
-      else{
-        this.lancamentoSelecionado!.status = "1";
-      }
-  
+        this.lancamentoSelecionado!.avulso = "0";
+
+         this.lancamentoSelecionado!.status = "0";
+      
       this.lancamentoService.postAvulso(this.lancamentoSelecionado!).subscribe(() => this.ngOnInit());
       
     }

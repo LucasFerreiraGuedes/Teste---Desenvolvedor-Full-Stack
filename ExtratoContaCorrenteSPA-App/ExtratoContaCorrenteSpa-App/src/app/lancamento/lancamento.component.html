@@ -36,16 +36,14 @@
           </div>
           <div class="mb-3">
             <label class="form-label">Avulso</label>
-            <select [disabled]="lancamentoSelecionado.id > 0" class="form-control mt-2" name="avulso" [(ngModel)]="lancamentoSelecionado!.avulso">
+            <select  [disabled]="lancamentoSelecionado.id > 0" class="form-control mt-2" name="avulso" [(ngModel)]="lancamentoSelecionado!.avulso">
               <option [ngValue]="'Avulso'">Sim</option>
-              <option [ngValue]="'NãoAvulso'">Não</option>
             </select>
           </div>
           <div class="mb-3">
             <label class="form-label">Status</label>
             <select [disabled]="lancamentoSelecionado.id > 0" class="form-control mt-2" name="status" [(ngModel)]="lancamentoSelecionado!.status">
               <option [ngValue]="'Válido'">Válido</option>
-              <option [ngValue]="'Cancelado'">Cancelado</option>
             </select>
           </div>
           
