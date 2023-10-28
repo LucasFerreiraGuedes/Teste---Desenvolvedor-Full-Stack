@@ -17,6 +17,13 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<ILancamentoRepository, LancamentoRepository>();
 
 var app = builder.Build();
+builder.Services.AddCors();
+app.UseCors(opt =>
+{
+	opt.AllowAnyHeader();
+	opt.AllowAnyMethod();
+	opt.AllowAnyOrigin();
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

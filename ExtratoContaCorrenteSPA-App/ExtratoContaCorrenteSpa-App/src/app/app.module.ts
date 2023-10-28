@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { LancamentoComponent } from './lancamento/lancamento.component';
 import { NavComponent } from './nav/nav.component';
+import { LancamentoService } from './Services/Lancamento.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [		
@@ -16,9 +18,10 @@ import { NavComponent } from './nav/nav.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [LancamentoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
