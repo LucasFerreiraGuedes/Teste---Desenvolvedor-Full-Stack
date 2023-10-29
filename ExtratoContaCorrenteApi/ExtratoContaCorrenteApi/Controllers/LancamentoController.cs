@@ -21,30 +21,38 @@ namespace ExtratoContaCorrenteApi.Controllers
         [HttpGet]
         public  async Task<ActionResult<IEnumerable<Lancamento>>> GetAll()
         {
-            IEnumerable<Lancamento> lancamentos = await _context.GetAll();
+            try 
+             {
+				IEnumerable<Lancamento> lancamentos = await _context.GetAll();
 
-            if(lancamentos == null)
-            {
-                return NotFound();
+				if (lancamentos == null) {
+					return NotFound();
+				} else {
+					return Ok(lancamentos);
+				}
+			} catch (Exception e) {
+
+                return BadRequest("Ocorreu um erro no servidor: "+ e.Message);
             }
-            else
-            {
-                return Ok(lancamentos);
-            }
+           
         }
 
         [HttpGet("GetByDate")]
         public async Task<ActionResult<IEnumerable<Lancamento>>> GetByDate(DateTime date,int intervalo)
         {
-            IEnumerable<Lancamento> lancamentos = await _context.GetByDate(date, intervalo);
+            try {
+				IEnumerable<Lancamento> lancamentos = await _context.GetByDate(date, intervalo);
 
-			if (lancamentos == null)
-			{
-				return NotFound();
-			}
-			else
-			{
-				return Ok(lancamentos);
+				if (lancamentos == null) {
+					return NotFound();
+				}
+                else {
+					return Ok(lancamentos);
+				}
+
+			} catch (Exception e) {
+
+				return BadRequest("Ocorreu um erro no servidor: " + e.Message);
 			}
 
 		}
@@ -52,35 +60,50 @@ namespace ExtratoContaCorrenteApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Lancamento>> Add(LancamentoDTO lancamentoDTO)
         {
-            Lancamento lancamento = _mapper.Map<Lancamento>(lancamentoDTO);
+            try 
+             {
+				Lancamento lancamento = _mapper.Map<Lancamento>(lancamentoDTO);
 
-            Boolean response = await _context.Add(lancamento);
+				Boolean response = await _context.Add(lancamento);
 
-            if(response)
+				if (response) 
+                {
+					return CreatedAtAction(null, lancamento);
+				}
+                else
+                {
+					return BadRequest();
+				}
+			}
+            catch (Exception e) 
             {
-                return CreatedAtAction(null, lancamento);
-            }
-            else
-            {
-                return BadRequest();
-            }
+				return BadRequest("Ocorreu um erro no servidor: " + e.Message);
+			}
+            
         }
 
 		[HttpPost("NaoAvulso")]
 		public async Task<ActionResult<Lancamento>> AddLancamentoNaoAvulso(LancamentoNaoAvulsoDTO lancamentoNaoAvulsoDTO)
 		{
-			Lancamento lancamento = _mapper.Map<Lancamento>(lancamentoNaoAvulsoDTO);
+            try {
 
-			Boolean response = await _context.Add(lancamento);
+				Lancamento lancamento = _mapper.Map<Lancamento>(lancamentoNaoAvulsoDTO);
 
-			if (response)
-			{
-				return CreatedAtAction(null, lancamento);
+				Boolean response = await _context.Add(lancamento);
+
+				if (response)
+                {
+					return CreatedAtAction(null, lancamento);
+				} 
+                else {
+					return BadRequest();
+				}
+			} 
+            catch (Exception e) {
+
+				return BadRequest("Ocorreu um erro no servidor: " + e.Message);
 			}
-			else
-			{
-				return BadRequest();
-			}
+			
 		}
 
         [HttpPatch("CancelarLancamento")]
@@ -100,9 +123,9 @@ namespace ExtratoContaCorrenteApi.Controllers
             catch (Exception e)
             {
 
-                Console.WriteLine(e);
-            }
-            return BadRequest();
+				return BadRequest("Ocorreu um erro no servidor: " + e.Message);
+			}
+            
         }
         [HttpPatch("AttValorData")]
 
@@ -121,9 +144,9 @@ namespace ExtratoContaCorrenteApi.Controllers
             catch (Exception e)
             {
 
-				Console.WriteLine(e);
+				return BadRequest("Ocorreu um erro no servidor: " + e.Message);
 			}
-            return BadRequest();
+            
         }
 	}
 }

@@ -39,7 +39,7 @@ namespace ExtratoContaCorrenteApi.Repository.LancamentoRepo
 
 		public async Task<IQueryable<Lancamento>> GetByDate(DateTime date, int intervalo)
 		{
-			return _context.Lancamentos.AsNoTracking().Where(x => x.data.Day >= date.Day - intervalo && x.data.Day <= date.Day && (x.data.Month == date.Month && x.data.Year == date.Year)).OrderBy(x => x.data);
+			return _context.Lancamentos.AsNoTracking().Where(x => x.data.Day >= date.Day - intervalo && x.data.Day <= date.Day && (x.data.Month == date.Month && x.data.Year == date.Year)).OrderByDescending(x => x.data);
 		}
 
 		public async Task<Lancamento> Cancel(int id)

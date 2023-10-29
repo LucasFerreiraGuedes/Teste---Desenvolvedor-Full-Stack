@@ -1,10 +1,10 @@
-<div class="container">
-  <div class="row" style="text-align: center;margin-top: 30px;">
-    <div class="col-8">
+<div class="Componentprincipal">
+  <div class="row" style="text-align: center;padding-top: 40px;">
+    <div class="col-9">
       <header>
-        <h3 >
+        <h2 >
           Extrato de Conta Corrente
-        </h3>
+        </h2>
       </header>
     </div>
     <div class="col-3">
@@ -13,49 +13,74 @@
     
   </div>
 
+  <div class="row" style="margin-top: 70px;">
+    <div>
+       <img (click)="ativarFiltro()" src="../../assets/Images/filter-removebg-preview.png" alt="" style="width: 35px; cursor: pointer;">
+    </div>
 
-  
+    <div *ngIf="filtro" style="margin-top: 10px;">
+      <input type="date" name="dateFilter"  [(ngModel)]="dataFiltro" (ngModelChange)=" filtrarData()">
+    </div>
+  </div>
 
 
-   <div class="row" style="margin-top: 60px;">
+  <div class="row">
+    <div class="col-9"> 
+    </div>
+    <div class="col-3" style="margin-top: 20px;" >
+      <h5>
+       Valor total de Lançamentos:<b> R$ {{valortotalLancamentos}}</b>
+      </h5>
+    </div>
+   </div>
+
+
+   <div class="row" style="margin-top: 40px;">
 
         <div class="col-5" *ngIf="lancamentoSelecionado">
         
-        <form>
+        <form #FormDir="ngForm" style="background-color: white; padding: 30px;">
           <div class="mb-3">
             <label class="form-label">Descrição do Lançamento</label>
-            <input [disabled]="lancamentoSelecionado.id > 0" type="text" class="form-control" name="descricao" [(ngModel)] = "lancamentoSelecionado!.descricao">
+            <input required="true" [disabled]="lancamentoSelecionado!.id > 0" type="text" class="form-control" name="descricao" [(ngModel)] = "lancamentoSelecionado!.descricao">
           </div>
+          <div *ngIf="FormDir.submitted && FormDir.controls['descricao'].invalid">
+            <div class="text-danger">Campo Descrição é obrigatório</div>
+          </div>
+
           <div class="mb-3">
             <label class="form-label">Data</label>
-            <input type="date" name="data" class="form-control" [(ngModel)] = "lancamentoSelecionado!.data">
+            <input required="true" type="date" name="data" class="form-control" [(ngModel)] = "lancamentoSelecionado!.data">
           </div>
+          <div *ngIf="FormDir.submitted && FormDir.controls['data'].invalid ">
+            <div class="text-danger">Campo Data é obrigatório</div>
+          </div>
+
           <div class="mb-3">
             <label class="form-label">Valor</label>
-            <input type="number" class="form-control" name="preco" [(ngModel)] ="lancamentoSelecionado!.valor">
+            <input required="true" type="number" class="form-control" name="valor" [(ngModel)] ="lancamentoSelecionado!.valor">
+          </div>
+          <div *ngIf="FormDir.submitted && FormDir.controls['valor'].invalid">
+            <div class="text-danger">Campo Valor é obrigatório</div>
           </div>
           <div class="mb-3">
             <label class="form-label">Avulso</label>
-            <select  [disabled]="lancamentoSelecionado.id > 0" class="form-control mt-2" name="avulso" [(ngModel)]="lancamentoSelecionado!.avulso">
-              <option [ngValue]="'Avulso'">Sim</option>
-            </select>
+            <input disabled="true" type="text" class="form-control" name="avulso" value="Avulso">
           </div>
           <div class="mb-3">
             <label class="form-label">Status</label>
-            <select [disabled]="lancamentoSelecionado.id > 0" class="form-control mt-2" name="status" [(ngModel)]="lancamentoSelecionado!.status">
-              <option [ngValue]="'Válido'">Válido</option>
-            </select>
+            <input disabled="true"  type="text" class="form-control" name="status" value="Válido">
           </div>
           
           <button (click)="salvarLancamento()" type="submit" class="btn btn-primary">Submit</button>
-          <button (click)="limparLancamentoSelecionado()" type="submit" class="btn btn-warning">Voltar</button>
+          <button (click)="limparLancamentoSelecionado()"  class="btn btn-warning">Voltar</button>
         </form>
 
         </div>
 
 
       <div [ngClass]="{'col-7': lancamentoSelecionado, 'col-12': !lancamentoSelecionado}">
-      <table class="table">
+      <table class="table" style="padding: 50px;">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -86,6 +111,8 @@
       </table>
     </div>
    </div>
+
+   
 
 
 

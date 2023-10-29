@@ -25,7 +25,7 @@ namespace ExtratoContaCorrenteApi.Models
 			Id = id;
 			this.descricao = descricao;
 			this.data = DateTime.Now;
-			this.valor = valor;
+			this.valor = Math.Round(valor, 2);
 			this.avulso = avulso;
 			this.status = status;
 

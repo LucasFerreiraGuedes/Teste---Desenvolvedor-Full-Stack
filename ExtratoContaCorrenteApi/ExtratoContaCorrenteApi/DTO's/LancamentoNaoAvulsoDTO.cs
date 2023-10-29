@@ -8,7 +8,9 @@ namespace ExtratoContaCorrenteApi.DTO_s
 		public string descricao { get; set; }
 		public DateTime data { get; set; }
 		public double valor { get; set; }
-		private Boolean avulso { get; set; } = false;
+
+		[JsonConverter(typeof(JsonStringEnumConverter))]
+		private Avulso avulso { get; set; }
 
 		[JsonConverter(typeof(JsonStringEnumConverter))]
 		private Status status { get; set; }
@@ -18,7 +20,8 @@ namespace ExtratoContaCorrenteApi.DTO_s
 			this.descricao = descricao;
 			this.data = data;
 			this.valor = valor;
-			this.status = Status.Válido;
+			this.status = Status.Cancelado;
+			this.avulso = Avulso.NãoAvulso;
 
 		}
 
